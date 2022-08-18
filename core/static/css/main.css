@@ -1,0 +1,193 @@
+* {
+    font-size: 10px;
+    font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+
+
+/* login */
+
+
+
+/* login end */
+
+
+/* resigter  */
+
+.resigter-con {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4070f4;
+   
+}
+
+.resigter-form {
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+}
+
+.resigter-form .form {
+    padding: 30px;
+}
+
+.resigter-form .form .title {
+    position: relative;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.resigter-form .form .title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #4070f4;
+    border-radius: 25px;
+}
+
+.form .input-field {
+    height: 50px;
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.input-field input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid) {
+    border-bottom-color: #4070f4 ;
+}
+
+.input-field svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 2.2rem;
+}
+
+.input-field input:is(:focus, :valid) ~ svg {
+    fill: #4070f4;
+}
+
+
+.input-field svg.icon {
+    left: 0;
+}
+
+.input-field svg.bi-eye-slash {
+    right: 0;
+    cursor: pointer;
+    /* padding: 10px; */
+}
+
+.input-field svg.bi-eye {
+    right: 0;
+    cursor: pointer;
+    /* padding: 10px; */
+}
+
+.form .button {
+    margin-top: 35px;
+
+}
+
+.form .button input{
+   border: none;
+   background-color: #4070f4;
+   color: #fff;
+   letter-spacing: 1px;
+   font-size: 1rem;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.button input:hover {
+    background-color: #265df2;
+}
+
+.form 
+
+
+/* resigter end */
+
+.nav_container {
+    align-items: center;
+    justify-content: space-around !important;
+}
+.nav_input {
+    display: flex;
+    background-color: #eee;
+    width: 100%;
+    border-radius: 10px;
+    min-width: 600px;
+    padding: 10px 0 ;
+    align-items: center;
+}
+
+.nav_input img {
+    width: 25px;
+    margin: 0 10px;
+}
+
+.nav_input input {
+    background-color: #eee;
+    border: none;
+    padding: 15px 0;
+
+}
+
+.nav_input input::placeholder {
+    font-size: 1.8rem;
+}
+.user_box {
+    display: flex;
+    align-items: center;
+}
+
+.user_box div {
+    margin-right: 10px;
+
+}
+
+.user_box div:last-child {
+    margin-right: 0;
+}
+
+.user_profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+}
+
+.mypage_profile{ 
+    display: flex;
+    width: 48px;
+    height: 48px;
+    background: url("../images/profile.jpg") no-repeat center;
+    border-radius: 50%;
+}
+
+

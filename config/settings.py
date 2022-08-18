@@ -105,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -123,3 +123,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 모델을 따로 커스텀 했기에 정의
+AUTH_USER_MODEL = 'core.User' 
+
+# 로그인 성공 시 자동으로 이동할 URL
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+
+# 로그아웃 성공 시 자동으로 이동할 URL
+LOGOUT_REDIRECT_URL = '/'
