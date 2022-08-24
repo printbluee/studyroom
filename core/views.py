@@ -8,11 +8,15 @@ from core.utils import util as custom_util
 
 #모델 가져오기
 from .models import User
+from room.models import Room
 
-# 메안페아자
+# 메안페이지
 @csrf_exempt
-def main(requset):
-    return render(requset, 'index.html')
+def main(request):
+    room_list = Room.objects.all().order_by('-id')   
+    res_data = {'room' : room_list}
+    return render(request, 'index.html', res_data)
+
 
 # 가입
 @csrf_exempt
