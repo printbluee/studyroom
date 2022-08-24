@@ -13,8 +13,6 @@ from .models import User
 # 메안페아자
 @csrf_exempt
 def main(requset):
-    # room_list = Room.objects.all().order_by('-id')
-    # res_data = {'room' : room_list}
     return render(requset, 'index.html')
 
 # 가입
@@ -65,3 +63,40 @@ def resigter(request):
 
     else:
         return render(request, 'resigter.html')
+
+
+#마이페이지
+@login_required
+def mypage(request):
+    user = request.user
+
+    res_data = {}
+    res_data['user'] = {
+        'user_id' : user.username, # 회원아이디
+        'user_nickname' : user.nickname, # 닉네임
+        'user_name' : user.name, # 닉네임
+        'user_bio' : user.bio, # 자기소개
+    }
+
+    return render(request, 'mypage.html',res_data)
+
+#마이페이지 수정
+@login_required
+def mypage_edit(request):
+    res_data = {}
+    user = request.user
+
+    res_data['user'] = {
+        'user_id' : user.username, # 회원아이디
+        'user_nickname' : user.nickname, # 닉네임
+        'user_name' : user.name, # 닉네임
+        'user_bio' : user.bio, # 자기소개
+    }
+
+    if request.method == 'POST':
+        user_bio = request.POST['user_bio']
+        user.bio = user_bio
+        user.save()
+        return redirect('mypage')
+    else:
+        return render(request, 'mypage_edit.html', res_data)
