@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 #모델 가져오기
 from room.models import Room
 
-#글쓰기추가  
+# 글 쓰기  
 @login_required
 def room_add(request):
     if request.method == 'POST': # post요청일 경우 if문 실행
@@ -85,6 +85,14 @@ def room_edit(request,pk):
             res_data['room'] = room
             return render(request, 'room_edit.html', res_data)
     else:
-        return render(request, 'main.html', {"error" : "권한이 없습니다."})
+        return render(request, 'index.html', {"error" : "권한이 없습니다."})
 
 
+# 글 삭제
+@login_required
+def room_delete(request, pk):
+    room = Room.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        room.delete() #삭제 
+        return redirect('main') # 메인페이지 이동

@@ -14,7 +14,7 @@ for (let i = 0; i < settingIcon.length; i++) {
 
 for (let i = 0; i < settingIcon.length; i++) {
     roomRemove[i].addEventListener("click", function(){
-       alert("삭제하시겠습니까?")
+       alert("삭제됐습니다.")
     })
 
 }
