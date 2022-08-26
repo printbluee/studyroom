@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room 수정</title>
+</head>
+
+<body>
+    <div class="mx-auto container py-20 px-6">
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="title">제목</label><br>
+                <input type="text" name="title" id="title" value="{{ room.title|safe }}">
+            </div>
+            <div>
+                <label for="content">방 비밀번호</label><br>
+                <input type="text" name="room_password" id="room_password" placeholder="*****"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+            </div>
+            <div>
+                <label for="content">부제목</label><br>
+                <input type="text" name="sub_title" id="sub_title" value="{{ room.sub_title|safe }}">
+            </div>
+            <div>
+                <label for="content">내용</label><br>
+                <textarea name="content" id="content" cols="30" rows="10">{{ room.content|safe }}</textarea>
+            </div>
+    
+            <input type="submit" value="수정하기"></a>
+    
+            <button type="button">
+                <a href="/">뒤로가기</a>
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>

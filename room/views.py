@@ -42,4 +42,49 @@ def room_add(request):
     else:
         return render(request, 'room_add.html')
 
+# 글 수정
+@login_required
+def room_edit(request,pk):
+    res_data = {}
+    try:
+        room = Room.objects.get(pk=pk)
+    except:
+        return render(request, 'room_edit.html', {'error' : "잘못된 접근입니다."})
+
+    user = request.user # 현재 로그인되어있는 유저
+    room_owner = room.room_owner # 포스팅 작성한 유저
+    res_data['room_owner'] = room_owner
+    if user == room_owner:
+        if request.method == 'POST':
+            res_data['room'] = room
+ 
+            title = request.POST['title']
+            sub_title = request.POST['sub_title']
+            content = request.POST['content']
+
+            if not title:
+                res_data['error'] = "제목을 입력 해주세요"
+            if not sub_title:
+                res_data['error'] = "부제목을 입력 해주세요"
+            if not content:
+                res_data['error'] = "내용을 입력 해주세요"
+
+            if (title and sub_title and content): #모두 입력했을 때
+                room.title = title
+                room.sub_title = sub_title
+                room.content = content
+                room.save() #저장
+                return redirect('main') # 메인페이지 이동
+
+            else:
+                res_data['error'] = "에러발생 모든 내용을 입력 해주세요"
+            
+            return render(request, 'room_edit.html', res_data)
+
+        elif request.method == 'GET':
+            res_data['room'] = room
+            return render(request, 'room_edit.html', res_data)
+    else:
+        return render(request, 'main.html', {"error" : "권한이 없습니다."})
+
 
