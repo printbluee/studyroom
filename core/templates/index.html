@@ -115,13 +115,15 @@
                                 </div>
                             </div>
 
+                            <!-- 룸 수정/삭제 -->
+                            {% if request.user.is_authenticated %}
+                                    {% if r.room_owner == request.user %}
                             <div class="setting_icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                     class="bi bi-three-dots" viewBox="0 0 16 16">
                                     <path
                                         d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
                                 </svg>
-                                <!-- 룸 수정/삭제 -->
                                 <div class="setting_icon-modal">
                                     <div class="modal_box">
                                         <p><a href="room/edit/{{ r.pk }}" class="room_modify">수정</a></p>
@@ -129,6 +131,8 @@
                                     </div>
                                 </div>
                             </div>
+                                {% endif %}
+                            {% endif %}
                         </div>
                         <div class="bottom_content">
                             <h3 class="room_title">방제 : {{ r.title }}</h3>

@@ -87,7 +87,6 @@ def room_edit(request,pk):
     else:
         return render(request, 'index.html', {"error" : "권한이 없습니다."})
 
-
 # 글 삭제
 @login_required
 def room_delete(request, pk):
