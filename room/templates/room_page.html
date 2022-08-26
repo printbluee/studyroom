@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room 상세페이지</title>
+</head>
+<body>
+    <h5>방장 : {{ room.room_owner }}</h5>
+    <h5>방제 : {{ room.title }}</h5>
+    <h5>부제 : {{ room.sub_title }}</h5>
+    <h5>내용 : {{ room.content }}</h5>
+    <h5>작성일 : {{ room.create | date:"Y-m-d" }}</h5>
+
+    <!-- 수정/삭제 -->
+    {% if request.user == room.room_owner %}
+    <div>
+        <button type="button">
+            <a href="{% url 'room_edit' room.pk %}">수정</a>
+        </button>
+        <button type="button">
+            <a href="{% url 'room_delete' room.pk %}">삭제</a>
+        </button>
+    </div>
+    {% elif request.user != posts.room_owner %}
+    <div>
+        <button type="button">
+            <a href="/">가입하기</a>
+        </button>
+    </div>
+    {% endif %}
+</body>
+</html>

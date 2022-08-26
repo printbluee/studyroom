@@ -33,11 +33,11 @@
             </div>
 
             <div class="collapse navbar-collapse nav_right" id="navbarSupportedContent">
-
-                <form class="d-flex main_search_form" role="search">
+                <!-- 검색창 -->
+                <form class="d-flex main_search_form" role="search" action="{% url 'search' %}" method="get">
                     <div class="form_btnbox">
-                        <input class="form-control" type="search" placeholder="스터디 모집 찾기" aria-label="Search">
-                        <button class="btn " type="submit">
+                        <input class="form-control" type="search" placeholder="스터디 모집 찾기" aria-label="Search" name="q" value="{{ q }}">
+                        <button class="btn" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                 class="bi bi-search" viewBox="0 0 16 16">
                                 <path

@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 #모델 가져오기
 from room.models import Room
 
@@ -41,6 +42,37 @@ def room_add(request):
             return render(request, 'room_add.html', {"error" : "에러발생 모든 내용을 입력 해주세요"}) 
     else:
         return render(request, 'room_add.html')
+
+# 글 상세페이지
+def room_page(request, pk):
+    room_pk = Room.objects.get(pk=pk)
+    res_data = { 'room': room_pk }
+    
+    return render(request, 'room_page.html',res_data)
+
+# 검색하기
+@csrf_exempt
+def search(request):
+    search_keyword = request.GET.get('q', None)
+    res_data = {}
+
+    if search_keyword: # 키워드 검색이 들어왔을때만 작동
+        if len(search_keyword) > 1:
+            room_list = Room.objects.all().order_by('-id')
+            
+            search_posting_list = room_list.filter(
+                Q (title__icontains=search_keyword) | # 방제
+                Q (sub_title__icontains=search_keyword) | #부제
+                Q (content__icontains=search_keyword) | #내용
+                Q (room_owner__username__icontains=search_keyword) #방장
+                )
+            res_data['room'] = search_posting_list
+        else:
+            res_data['error'] = "검색어는 2글자 이상 입력해주세요."
+    else:
+        res_data['error'] = "검색 결과가 없습니다."
+    
+    return render(request, "index.html", res_data)
 
 # 글 수정
 @login_required
