@@ -17,6 +17,7 @@ class Room(models.Model):
     
     def __str__(self):
         return f'[{self.id}] {self.title} {self.room_owner} {self.room_password}/ {self.create}' # id=id
+
     
     def get_absolute_url(self): #어드민에서 게시글 바로 볼 수 있음
         return f'room/page/{self.id}'

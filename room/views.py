@@ -16,17 +16,17 @@ def room_add(request):
         room_owner = request.user 
 
         if not title:
-            return render(request, 'room_add.html', {"error" : "방제목를 입력 해주세요."}) 
+            return render(request, 'create_room.html', {"error" : "방제목를 입력 해주세요."}) 
             
         if not sub_title:
-            return render(request, 'room_add.html', {"error" : "부제목을 입력 해주세요"}) 
+            return render(request, 'create_room.html', {"error" : "부제목을 입력 해주세요"}) 
 
         if not content:
-            return render(request, 'room_add.html', {"error" : "내용을 입력 해주세요"})
+            return render(request, 'create_room.html', {"error" : "내용을 입력 해주세요"})
 
         if room_password:
             if len(room_password) != 5: # 비밀번호는 필수가 아니지만 있을 경우 숫자 5글자
-                return render(request, 'room_add.html', {"error" : "방 비밀번호는 숫자 5글자로 설정해주세요"})
+                return render(request, 'create_room.html', {"error" : "방 비밀번호는 숫자 5글자로 설정해주세요"})
 
         if (title and sub_title and content):
             PostingObj = Room()
@@ -39,9 +39,9 @@ def room_add(request):
             return redirect('main') # core/views.py에 main함수 이동(메인페이지)
 
         else:
-            return render(request, 'room_add.html', {"error" : "에러발생 모든 내용을 입력 해주세요"}) 
+            return render(request, 'create_room.html', {"error" : "에러발생 모든 내용을 입력 해주세요"}) 
     else:
-        return render(request, 'room_add.html')
+        return render(request, 'create_room.html')
 
 # 글 상세페이지
 def room_page(request, pk):

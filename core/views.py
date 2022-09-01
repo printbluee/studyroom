@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator 
 
 # 정규표현식
 from core.utils import util as custom_util
@@ -10,13 +11,17 @@ from core.utils import util as custom_util
 from .models import User
 from room.models import Room
 
-# 메안페이지
+# 메인페이지
 @csrf_exempt
 def main(request):
     room_list = Room.objects.all().order_by('-id')   
-    res_data = {'room' : room_list}
-    return render(request, 'index.html', res_data)
 
+    page = request.GET.get('page', '1')  # 페이지
+    paginator = Paginator(room_list, 6)  # 페이지당 6개씩 보여주기
+    page_obj = paginator.get_page(page)
+
+    res_data = {'room' : page_obj}
+    return render(request, 'index.html', res_data)
 
 # 가입
 @csrf_exempt

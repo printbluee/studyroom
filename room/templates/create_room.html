@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스터디룸 | 모집글 생성</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/reset.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+
+</head>
+
+<body>
+    <!-- nav -->
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid padding-none">
+
+            <div class="nav_left">
+                <a class="navbar-brand" href="/">스ㅌㅓ디룸</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse nav_right" id="navbarSupportedContent">
+                <!-- 검색창 -->
+                <form class="d-flex main_search_form" role="search" action="{% url 'search' %}" method="get">
+                    <div class="form_btnbox">
+                        <input class="form-control" type="search" placeholder="스터디 모집 찾기" aria-label="Search" name="q"
+                            value="{{ q }}">
+                        <button class="btn" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- 로그인/로그아웃 했을 경우 유저의 현재 활동 가능 상태를 판단하는 제어문 -->
+                <ul class="navbar-nav nav-ul">
+                    {% if request.user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="mypage">{{ request.user }}</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/mypage/">마이페이지</a></li>
+                            <li><a class="dropdown-item" href="#">가입된 스터디 </a></li>
+                            <li><a class="dropdown-item" href="/logout/">로그아웃</a></li>
+                        </ul>
+                    </li>
+
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="login" href="/login/">로그인</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="resigter" href="/resigter/">회원가입</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- nav end -->
+
+    <!-- main section start -->
+    {% if error %}
+    <script>alert('{{error}}')</script>
+    {% endif %}
+
+    <section class="main-section section container-fluid">
+        <form action="{% url 'room_add' %}" method="post">
+            {% csrf_token %}
+            <div class="main_title container">
+                <h1 class="text-center">스터디룸 생성하기</h1>
+            </div>
+    
+            <div class="create_room-con container">
+                <div class="room-title">
+                    <p>방제목</p>
+                    <input type="text" name="title" id="title">
+                </div>
+                <div class="room-content">
+                    <p>부제목 </p>
+                    <input type="text" name="sub_title" id="sub_title">
+                </div>
+    
+                <div class="room-content">
+                    <p>내용<span style="color: #fff">ㄱ</span></p>
+                    <textarea name="content" id="content" class="room-textarea" placeholder="내용을 입력해주세요."></textarea>
+                </div>
+    
+                <div class="secret_create-check">
+                    <div class="create-check-box">
+                        <p>비밀방 생성하기</p>
+                        <input type="checkbox" class="create-check-btn">
+                    </div>
+                    <input type="number" name="room_password" id="room_password" class="password_setting" placeholder="숫자5자리를 입력해주세요" maxlength="5"
+                        oninput="numberMaxLength(this)">
+                </div>
+    
+                <div class="create_btn">
+                    <button input type="submit" class="create-btn-btn">
+                        생성
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- main section end -->
+    <script src="../static/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

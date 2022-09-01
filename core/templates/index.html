@@ -14,8 +14,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/reset.css">
-    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="./static/css/reset.css">
+    <link rel="stylesheet" href="./static/css/main.css">
+
 </head>
 
 <body>
@@ -36,7 +37,8 @@
                 <!-- 검색창 -->
                 <form class="d-flex main_search_form" role="search" action="{% url 'search' %}" method="get">
                     <div class="form_btnbox">
-                        <input class="form-control" type="search" placeholder="스터디 모집 찾기" aria-label="Search" name="q" value="{{ q }}">
+                        <input class="form-control" type="search" placeholder="스터디 모집 찾기" aria-label="Search" name="q"
+                            value="{{ q }}">
                         <button class="btn" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                 class="bi bi-search" viewBox="0 0 16 16">
@@ -48,11 +50,11 @@
                 </form>
 
                 <!-- 로그인/로그아웃 했을 경우 유저의 현재 활동 가능 상태를 판단하는 제어문 -->
-                <ul class="navbar-nav ">
+                <ul class="navbar-nav nav-ul">
                     {% if request.user.is_authenticated %}
 
                     <li class="nav-item">
-                        <a class="mypage" href="#">{{ request.user }}</a>
+                        <a class="mypage">{{ request.user }}</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -76,115 +78,177 @@
                     </li>
                     {% endif %}
                 </ul>
-
             </div>
         </div>
     </nav>
     <!-- nav end -->
 
-    <!-- main section start -->
+    <!-- 글 목록 출력 -->
     <section class="main-section section container-fluid">
-        <div class="container main_content">
-            <!-- 글 목록 출력 -->
-            {% if not room %}
-                <h1>검색결과 없음</h1>
-            {% endif %}
 
+        <!-- 룸이 없을 때 -->
+        {% if not room %}
+        <div class="container main_content">
+            <div class="main_con ds-flex">
+                <div class="main_content-box">
+                    <div class="bottom_content">
+                        <h3 class="room_title">현재 게시된 게시물이 없습니다.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="container main_content">
             {% if room %}
             {% for r in room %}
-                <div class="main_con">
-                    <div class="main_content-box">
-                        <div class="oner_box">
-                            <!-- 방장 -->
-                            <div class="oner_box-profile">
-                                <div class="oner_profile">
-                                    <img src="../static/images/profile.jpg" alt="">
-                                </div>
-                                <div class="oner_name">
-                                    <p>방장 : {{ r.room_owner }}</p>
-                                </div>
-                            </div>
+            <div class="main_con">
+                <div class="main_content-box">
+                    <div class="oner_box">
 
-                            <div class="oner_box-secret">
-                                <div class="oner_profile">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-key-fill"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                                    </svg>
-                                </div>
+                        <div class="oner_box-profile">
+                            <div class="oner_profile">
+                                <img src="../static/images/profile.jpg" alt="">
                             </div>
+                            <div class="oner_name">
+                                <p>방장 : {{ r.room_owner }}</p>
+                            </div>
+                        </div>
 
-                            <!-- 룸 수정/삭제 -->
-                            {% if request.user.is_authenticated %}
-                                    {% if r.room_owner == request.user %}
-                            <div class="setting_icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                    class="bi bi-three-dots" viewBox="0 0 16 16">
+                        <!-- 공개방/비밀방 -->
+                        {% if r.room_password %}
+                        <div class="oner_box-secret">
+                            <div class="oner_profile">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-key-fill"
+                                    viewBox="0 0 16 16">
                                     <path
-                                        d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                        d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                 </svg>
-                                <div class="setting_icon-modal">
-                                    <div class="modal_box">
-                                        <p><a href="room/edit/{{ r.pk }}" class="room_modify">수정</a></p>
-                                        <p><a href="room/delete/{{ r.pk }}" class="room_remove">삭제</a></p>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        <!-- 룸 수정/삭제 -->
+                        {% if request.user.is_authenticated %}
+                        {% if r.room_owner == request.user %}
+                        <div class="setting_icon">
+                            <!-- 햄버거 -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path
+                                    d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                            </svg>
+                            <div class="setting_icon-modal">
+                                <div class="modal_box">
+                                    <p><a href="room/edit/{{ r.pk }}" class="room_modify">수정</a></p>
+                                    <button type="button" class="btn " data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">삭제
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        스터디룸을 삭제하시겠습니까?
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick = "location.href = 'room/delete/{{ r.pk }}' ">예</button>
+                                        <button type="button" class="btn btn-primary" onclick = "location.href = '/' ">아니오</button>
                                     </div>
                                 </div>
                             </div>
-                                {% endif %}
-                            {% endif %}
                         </div>
-                        <div class="bottom_content">
-                            <h3 class="room_title">방제 : {{ r.title }}</h3>
-                            <p class="room_content">{{ r.sub_title }}</p>
-                            <p class="today">{{ r.create | date:"Y-m-d" }}</p>
-                        </div>
+                        {% endif %}
+                        {% endif %}
                     </div>
-                    <div class="room_btn">
-                        <div class="room_btn-box">
-                            <a href="{{ r.get_absolute_url }}" class="">더보기 ➜</a>
-                        </div>
+
+
+                    <div class="top_content">
+                        <img src="../static/images/studyroom01.jpg" alt="">
+                    </div>
+                    <div class="bottom_content">
+                        <h3 class="room_title">방제 : {{ r.title }}</h3>
+                        <p class="room_sub_title">{{ r.sub_title }}</p>
+                        <p class="room_create">{{ r.create | date:"Y-m-d" }}</p>
                     </div>
                 </div>
+                <div class="room_btn">
+                    <div class="room_btn-box">
+                        <a href="{{ r.get_absolute_url }}" class="">더보기 ➜</a>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
             {% endif %}
-
-
-            <!-- 글쓰기 추가 -->
-            <div>
-                <a href="{% url 'room_add' %}" class="add_btn">
-                    +
-                </a>
-            </div>
         </div>
 
-
-        <!-- 페이지 -->
+        <!-- 페이징처리 시작 -->
         <div aria-label="Page navigation example" class="navigation">
             <ul class="pagination">
+
+                <!-- 이전 페이지가 있을 때 -->
+                {% if room.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                {% endif %}
+
+                <!-- 페이지 리스트 -->
+                {% for page_number in room.paginator.page_range %}
+                {% if page_number == room.number %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+                {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                <!-- 다음 페이지 -->
+                {% if room.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </div>
+        <!-- 페이징처리 끝 -->
     </section>
 
+    <!-- main section end -->
+    <a href="{% url 'room_add' %}" class="add_btn">
+        +
+    </a>
 
-
-
-    <script src="static/js/main.js"></script>
+    <script src="../static/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
