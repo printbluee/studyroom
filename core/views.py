@@ -9,7 +9,7 @@ from core.utils import util as custom_util
 
 #모델 가져오기
 from .models import User
-from room.models import Room
+from room.models import Room, Room_member
 
 # 메인페이지
 @csrf_exempt
@@ -75,23 +75,13 @@ def resigter(request):
 #마이페이지
 @login_required
 def mypage(request):
-    user = request.user
-
-    res_data = {}
-    res_data['user'] = {
-        'user_id' : user.username, # 회원아이디
-        'user_nickname' : user.nickname, # 닉네임
-        'user_name' : user.name, # 닉네임
-        'user_bio' : user.bio, # 자기소개
-    }
-
-    return render(request, 'mypage.html',res_data)
-
-#마이페이지 수정
-@login_required
-def mypage_edit(request):
     res_data = {}
     user = request.user
+    room_list = Room.objects.all().order_by('-id')
+    members = Room_member.objects.all()
+    res_data = {'room' : room_list, 'member': members }
+    
+    print(members)
 
     res_data['user'] = {
         'user_id' : user.username, # 회원아이디
@@ -104,6 +94,5 @@ def mypage_edit(request):
         user_bio = request.POST['user_bio']
         user.bio = user_bio
         user.save()
-        return redirect('mypage')
-    else:
-        return render(request, 'mypage_edit.html', res_data)
+        
+    return render(request, 'mypage.html', res_data)

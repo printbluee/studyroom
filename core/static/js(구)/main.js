@@ -61,7 +61,7 @@ function numberMaxLength(e){
 // 인풋태그 글자수제한 4글자 
 // maxlength로 갯수제어후 스크립트로 제한
 
-
+// tap
 const checkboxBtn = document.querySelector(".create-check-btn");
 const checkboxInput = document.querySelector(".password_setting");
 
@@ -73,35 +73,7 @@ const checkboxInput = document.querySelector(".password_setting");
     }else {
         pass;
     }
-});
-
-// 비밀번호 입력 체크시 인풋창생성
-
-// 수정버튼 클릭시 자기소개 수정가능
-const mypage_introduce = document.querySelector(".textarea_introduce");
-const mypage_btn = document.querySelector(".mypage_btn");
-const mypage_btnFix = document.querySelector(".mypage_btn-fix");
-
-
-mypage_btn.addEventListener('click', function(){
-    mypage_introduce.readOnly = false;
-    mypage_introduce.innerHTML = "수정이 가능합니다."
-    mypage_btnFix.style.display = "flex";
 })
 
 
-// tap
-
-$(document).ready(function(){
-	
-	$('ul.tabs li').click(function(){							//선택자를 통해 tabs 메뉴를 클릭 이벤트를 지정해줍니다.
-		var tab_id = $(this).attr('data-tab');
-
-		$('ul.tabs li').removeClass('current');			//선택 되있던 탭의 current css를 제거하고 
-		$('.tab-content').removeClass('current');		
-
-		$(this).addClass('current');								////선택된 탭에 current class를 삽입해줍니다.
-		$("#" + tab_id).addClass('current');
-	})
-
-});
+// 비밀번호 입력 체크시 인풋창생성

@@ -283,6 +283,7 @@ nav {
         font-size: 1.4rem;
     }
 
+
     .dropdown-toggle {
         width: 70px;
         height: 70px;
@@ -315,7 +316,6 @@ nav {
 .main_content:last-child {
     justify-content: flex-end !important;
 }
-
 
 .main_con {
     border-radius: 20px;
@@ -702,15 +702,18 @@ nav {
     gap: 20px;
 }
 
-.mypage_top-button .mypage_btn {
+.top_btn {
     padding: 10px 50px;
     border: none;
     border: 1px solid #265df2;
     color: #265df2;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
     border-radius: 15px;
 }
 
-.mypage_top-button .mypage_btn:hover {
+.top_btn:hover {
     background-color: #265df2;
     border: 1px solid #265df2;
     color: #fff;
@@ -722,7 +725,7 @@ nav {
     border: 1px solid violet;
     color: violet;
     border-radius: 15px;
-    /* display: none; */
+    display: block;
 }
 
 .mypage_top-button .mypage_btn-fix:hover {
@@ -832,9 +835,6 @@ ul.tabs li.current{
     display: flex;
 }
 
-.room_info_con h1 {
-    margin-bottom: 10px;
-}
 .room_info-left {
     width: 50%;
 }
@@ -859,10 +859,7 @@ ul.tabs li.current{
 }
 
 .room_info-total {
-    /* background-color: #fff; */
-    width: 100%;
     display: flex;
-    gap: 10px;
     
 }
 
@@ -871,9 +868,6 @@ ul.tabs li.current{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #fff;
-    min-height: 450px;
-    padding: 10px;
 }
 
 .room_info-total .right-box {
@@ -881,9 +875,6 @@ ul.tabs li.current{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #fff;
-    min-height: 450px;
-    padding: 10px;
 }
 
 .room_info-member p img {
@@ -919,19 +910,16 @@ ul.tabs li.current{
 }
 
 .review_con {
-    margin-top: 10px;
+    margin-top: 30px;
     padding-bottom: 10px;
+    border-bottom: 1px solid #222;
 }
 
 .review-user {
-    width: 90%;
-    margin: 0 auto;
+    margin-left: 40px;
 }
 
 .user-title {
-    background: #fff;
-    padding: 10px;
-    border-radius: 15px;
     margin-top: 10px;
 }
 
@@ -948,14 +936,8 @@ ul.tabs li.current{
 
 .review_keyboard button {
     width: 10%;
-    border: 1px solid #222;
-    border-left: none;
+    border: none;
     outline: none;
     background-color: #fff;
     height: 36px;
-}
-
-.line {
-    margin: 10px 0;
-    border: 1px solid #222;
 }

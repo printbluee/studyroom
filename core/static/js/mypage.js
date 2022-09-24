@@ -61,6 +61,7 @@ function numberMaxLength(e){
 // 인풋태그 글자수제한 4글자 
 // maxlength로 갯수제어후 스크립트로 제한
 
+
 // 수정버튼 클릭시 자기소개 수정가능
 const mypage_introduce = document.querySelector(".textarea_introduce");
 const mypage_btn = document.querySelector(".mypage_btn");
@@ -69,7 +70,7 @@ const mypage_btnFix = document.querySelector(".mypage_btn-fix");
 
 mypage_btn.addEventListener('click', function(){
     mypage_introduce.readOnly = false;
-    mypage_introduce.innerHTML = "수정이 가능합니다."
+    mypage_introduce.innerHTML = ""
     mypage_btnFix.style.display = "flex";
 })
 

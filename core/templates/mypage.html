@@ -16,7 +16,6 @@
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/reset.css">
     <link rel="stylesheet" href="../static/css/main.css">
-
 </head>
 
 <body>
@@ -63,7 +62,6 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/mypage/">마이페이지</a></li>
-                            <li><a class="dropdown-item" href="#">가입된 스터디 </a></li>
                             <li><a class="dropdown-item" href="/logout/">로그아웃</a></li>
                         </ul>
                     </li>
@@ -85,110 +83,57 @@
 
     <!-- main section start -->
     <section class="section container-fluid">
-        <div class="main_title container">
-            <!-- <h1>마이페이지</h1> -->
-        </div>
+        <div class="main_title container"></div>
 
-        <div class="mypage_con container">
-            <div class="mypage_top">
-                <div class="mypage_top-profile">
-                    <img src="../static/images/profile1.jpg" alt="">
-                </div>
-                <div class="mypage_box">
-                    <div class="mypage_top-text">
-                        <div class="top-text-title">
-                            <p>유저아이디: <span>{{ user.user_id }}</span></p>
+        <!-- 자기소개 수정하기 -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="mypage_con container">
+                <div class="mypage_top">
+                    <div class="mypage_top-profile">
+                        <img src="../static/images/profile1.jpg" alt="">
+                    </div>
+                    <div class="mypage_box">
+                        <div class="mypage_top-text">
+                            <div class="top-text-title">
+                                <p>유저아이디: <span>{{ user.user_id }}</span></p>
+                            </div>
+                            <div class="top-text-nickname">
+                                <p>닉네임: <span>{{ user.user_nickname }}</span></p>
+                            </div>
+                            <div class="top-text-name">
+                                <p>이름: <span>{{ user.user_name }}</span></p>
+                            </div>
                         </div>
-                        <div class="top-text-nickname">
-                            <p>닉네임: <span>{{ user.user_nickname }}</span></p>
-                        </div>
-                        <div class="top-text-name">
-                            <p>이름: <span>{{ user.user_name }}</span></p>
+                        <div class="mypage_top-button">
+                            <a class="mypage_btn">수정</a>
+                            <button type="submit" class="mypage_btn-fix">저장</button>
                         </div>
                     </div>
-                    <div class="mypage_top-button">
-                        <button type="submit" class="mypage_btn">수정</button>
-                        <button type="submit" class="mypage_btn-fix">저장</button>
-                    </div>
-
+                </div>
+                <div class="mypage_Introduce">
+                    <textarea name="user_bio" name="user_bio" id="user_bio" placeholder="{{ user.user_bio }}" readonly
+                        class="textarea_introduce"></textarea>
                 </div>
             </div>
-            <div class="mypage_Introduce">
-                <textarea name="" placeholder="자기소개" readonly class="textarea_introduce"></textarea>
-            </div>
-        </div>
+        </form>
 
-
+        <!-- 탭 메뉴 상단 시작 -->
         <div class="container tap_con">
-            <!-- 탭 메뉴 상단 시작 -->
             <ul class="tabs">
                 <li class="tab-link current" data-tab="tab-1">방 관리</li>
                 <li class="tab-link" data-tab="tab-2">가입된 스터디</li>
-                <li class="tab-link" data-tab="tab-3">내가 쓴 글</li>
+                <!-- <li class="tab-link" data-tab="tab-3">내가 쓴 글</li> -->
             </ul>
             <!-- 탭 메뉴 상단 끝 -->
-            <!-- 탭 메뉴 내용 시작 -->
+
+            <!-- 탭 메뉴 내용 시작 tab-1 -->
             <div id="tab-1" class="tab-content current">
                 <div class="container main_content" style="justify-content: flex-start !important;">
-                    <div class="main_con secret">
-                        <div class="main_content-box">
-                            <div class="oner_box">
 
-                                <div class="oner_box-profile ds-none">
-                                    <div class="oner_profile">
-                                        <img src="../static/images/profile.jpg" alt="">
-                                    </div>
-                                    <div class="oner_name">
-                                        <p>햐얀둘리</p>
-                                    </div>
-                                </div>
-
-                                <div class="oner_box-secret">
-                                    <div class="oner_profile">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                            class="bi bi-key-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                <div class="setting_icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                        class="bi bi-three-dots" viewBox="0 0 16 16">
-                                        <path
-                                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z">
-                                        </path>
-                                    </svg>
-                                    <div class="setting_icon-modal">
-                                        <div class="modal_box">
-                                            <p><a href="" class="room_modify">수정</a></p>
-                                            <button type="button" class="btn " data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                삭제
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="top_content">
-                                <img src="../static/images/studyroom01.jpg" alt="">
-                            </div>
-                            <div class="bottom_content">
-                                <h3 class="room_title">방치형 킹덤 디펜스방</h3>
-                                <p class="room_content">서울시 남대문로 모각코 구합니다.</p>
-                                <p class="today">2020-08-17</p>
-                            </div>
-                        </div>
-                        <div class="room_btn">
-                            <div class="room_btn-box">
-                                <a href="" class="">가입하기</a>
-                            </div>
-                        </div>
-                    </div>
-
+                    {% if room %}
+                    {% for r in room %}
+                    {% if r.room_owner == request.user %}
                     <div class="main_con ">
                         <div class="main_content-box">
                             <div class="oner_box">
@@ -197,22 +142,24 @@
                                         <img src="../static/images/profile.jpg" alt="">
                                     </div>
                                     <div class="oner_name">
-                                        <p>햐얀둘리</p>
+                                        <p>방장 : {{ r.room_owner }}</p>
                                     </div>
                                 </div>
 
-                                <div class="oner_box-secret ds-none">
+                                <!-- 공개방/비밀방 -->
+                                {% if r.room_password %}
+                                <div class="oner_box-secret">
                                     <div class="oner_profile">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                             class="bi bi-key-fill" viewBox="0 0 16 16">
                                             <path
-                                                d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z">
-                                            </path>
+                                                d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                         </svg>
                                     </div>
-
                                 </div>
+                                {% endif %}
 
+                                <!-- 수정/삭제 -->
                                 <div class="setting_icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                         class="bi bi-three-dots" viewBox="0 0 16 16">
@@ -222,91 +169,115 @@
                                     </svg>
                                     <div class="setting_icon-modal">
                                         <div class="modal_box">
-                                            <p><a href="" class="room_modify">수정</a></p>
+                                            <p><a href="/room/edit/{{ r.pk }}" class="room_modify">수정</a></p>
                                             <button type="button" class="btn " data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                삭제
+                                                data-bs-target="#exampleModal">삭제
                                             </button>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                스터디룸을 삭제하시겠습니까 ? 
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                    onclick="location.href = '/room/delete/{{ r.pk }}' ">예</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="location.href = '' ">아니오</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="top_content">
                                 <img src="../static/images/studyroom01.jpg" alt="">
                             </div>
                             <div class="bottom_content">
-                                <h3 class="room_title">방치형 킹덤 디펜스방</h3>
-                                <p class="room_content">서울시 남대문로 모각코 구합니다.</p>
-                                <p class="today">2020-08-17</p>
+                                <h3 class="room_title">방제 : {{ r.title }}</h3>
+                                <p class="room_sub_title">{{ r.sub_title }}</p>
+                                <p class="room_create">{{ r.create | date:"Y-m-d" }}</p>
                             </div>
                         </div>
+                        <!-- 더보기 -->
                         <div class="room_btn">
                             <div class="room_btn-box">
-                                <a href="" class="">가입하기</a>
+                                <a href="/{{ r.get_absolute_url }}" class="">더보기 ➜</a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="main_con ds-flex">
-                        <div class="main_content-box">
-
-                            <div class="bottom_content">
-                                <h3 class="room_title">현재 게시된 게시물이 없습니다.</h3>
-
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
+            <!-- tap1 끝 -->
 
-            <!-- tap1 -->
-
+            <!-- 가입된 스터디 -->
             <div id="tab-2" class="tab-content">
-                <h1> 탭 메뉴 2 내용입니다. </h1>
-                <p>근로자는 근로조건의 향상을 위하여 자주적인 단결권·단체교섭권 및 단체행동권을 가진다. 국가는 청원에 대하여 심사할 의무를 진다. 이 헌법공포 당시의 국회의원의 임기는 제1항에 의한
-                    국회의 최초의 집회일 전일까지로 한다. 모든 국민은 직업선택의 자유를 가진다. 모든 국민은 언론·출판의 자유와 집회·결사의 자유를 가진다. 저작자·발명가·과학기술자와 예술가의
-                    권리는
-                    법률로써 보호한다. 대통령은 법률안의 일부에 대하여 또는 법률안을 수정하여 재의를 요구할 수 없다. 국회는 정부의 동의없이 정부가 제출한 지출예산 각항의 금액을 증가하거나 새
-                    비목을
-                    설치할 수 없다. 이 헌법시행 당시의 법령과 조약은 이 헌법에 위배되지 아니하는 한 그 효력을 지속한다.</p>
+                <div class="container main_content" style="justify-content: flex-start !important;">
 
-                <p>정기회의 회기는 100일을, 임시회의 회기는 30일을 초과할 수 없다. 훈장등의 영전은 이를 받은 자에게만 효력이 있고, 어떠한 특권도 이에 따르지 아니한다. 모든 국민은 헌법과
-                    법률이
-                    정한 법관에 의하여 법률에 의한 재판을 받을 권리를 가진다. 모든 국민은 양심의 자유를 가진다. 법관은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며,
-                    징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될 기관의 권한에 속하는 직무를 행하고 있는 기관은 이
-                    헌법에
-                    의하여 새로운 기관이 설치될 때까지 존속하며 그 직무를 행한다.</p>
-            </div>
+                    {% if member %}
+                    {% for r in room %}
+                    {% for m in member %}
+                    <div class="main_con ">
+                        <div class="main_content-box">
+                            <div class="oner_box">
+                                <div class="oner_box-profile">
+                                    <div class="oner_profile">
+                                        <img src="../static/images/profile.jpg" alt="">
+                                    </div>
+                                    <div class="oner_name">
+                                        <p>방장 : {{ m.room_owner }}</p>
+                                    </div>
+                                </div>
 
-            <!-- tap2 -->
+                                <!-- 공개방/비밀방 -->
+                                {% if r.room_password %}
+                                <div class="oner_box-secret">
+                                    <div class="oner_profile">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                            class="bi bi-key-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
 
-            <div id="tab-3" class="tab-content">
-                <h1> 탭 메뉴 3 내용입니다. </h1>
-                <p>대한민국은 국제평화의 유지에 노력하고 침략적 전쟁을 부인한다. 국군의 조직과 편성은 법률로 정한다. 타인의 범죄행위로 인하여 생명·신체에 대한 피해를 받은 국민은 법률이 정하는 바에
-                    의하여 국가로부터 구조를 받을 수 있다. 모든 국민은 법률이 정하는 바에 의하여 공무담임권을 가진다. 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지
-                    아니한다.</p>
-            </div>
-
-            <!-- tap3 -->
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="top_content">
+                                <img src="../static/images/studyroom01.jpg" alt="">
+                            </div>
+                            <div class="bottom_content">
+                                <h3 class="room_title">방제 : {{ r.title }}</h3>
+                                <p class="room_sub_title">{{ r.sub_title }}</p>
+                                <p class="room_create">{{ r.create | date:"Y-m-d" }}</p>
+                            </div>
+                        </div>
+                        <!-- 더보기 -->
+                        <div class="room_btn">
+                            <div class="room_btn-box">
+                                <a href="/{{ r.get_absolute_url }}" class="">더보기 ➜</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        스터디룸을 삭제하시겠습니까?
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">예</button>
-                        <button type="button" class="btn btn-primary">아니오</button>
-                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
+            <!-- 스터디 끝 -->
         </div>
 
     </section>

@@ -63,7 +63,6 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/mypage/">마이페이지</a></li>
-                            <li><a class="dropdown-item" href="#">가입된 스터디 </a></li>
                             <li><a class="dropdown-item" href="/logout/">로그아웃</a></li>
                         </ul>
                     </li>
@@ -132,8 +131,8 @@
                         <!-- 룸 수정/삭제 -->
                         {% if request.user.is_authenticated %}
                         {% if r.room_owner == request.user %}
+                        <!-- 햄버거 -->
                         <div class="setting_icon">
-                            <!-- 햄버거 -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                 class="bi bi-three-dots" viewBox="0 0 16 16">
                                 <path
@@ -142,6 +141,7 @@
                             <div class="setting_icon-modal">
                                 <div class="modal_box">
                                     <p><a href="room/edit/{{ r.pk }}" class="room_modify">수정</a></p>
+                                    
                                     <button type="button" class="btn " data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">삭제
                                     </button>

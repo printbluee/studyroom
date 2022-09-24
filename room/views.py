@@ -44,11 +44,11 @@ def room_add(request):
         return render(request, 'create_room.html')
 
 # 글 상세페이지
-def room_page(request, pk):
+def room_info(request, pk):
     room_pk = Room.objects.get(pk=pk)
     res_data = { 'room': room_pk }
     
-    return render(request, 'room_page.html',res_data)
+    return render(request, 'room_info.html',res_data)
 
 # 검색하기
 @csrf_exempt
