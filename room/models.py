@@ -18,6 +18,7 @@ class Room(models.Model):
 
     
     def __str__(self):
+        # return self.title
         return f'[{self.id}] {self.title} {self.room_owner} {self.room_password}/ {self.create}' # id=id
 
     
@@ -49,7 +50,8 @@ class Room_comment(models.Model):
     created_at = models.DateTimeField(default=timezone.now, verbose_name="작성일")
 
     def __str__(self):
-        return self.comment
+        return f'{self.room} {self.comment}'
+        # return self.comment
 
     class Meta:
         db_table = 'Room_comment'

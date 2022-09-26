@@ -127,9 +127,17 @@
             </ul>
             <!-- 탭 메뉴 상단 끝 -->
 
-            <!-- 탭 메뉴 내용 시작 tab-1 -->
+            <!-- tab1 -->
             <div id="tab-1" class="tab-content current">
                 <div class="container main_content" style="justify-content: flex-start !important;">
+                    
+                    <!-- <div class="main_con ds-flex">
+                        <div class="main_content-box">
+                            <div class="bottom_content">
+                                <h3 class="room_title">현재 게시된 게시물이 없습니다.</h3>
+                            </div>
+                        </div>
+                    </div> -->
 
                     {% if room %}
                     {% for r in room %}
@@ -186,7 +194,7 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                스터디룸을 삭제하시겠습니까 ? 
+                                                스터디룸을 삭제하시겠습니까 ?
                                             </div>
 
                                             <div class="modal-footer">
@@ -216,20 +224,23 @@
                             </div>
                         </div>
                     </div>
+                    
                     {% endif %}
                     {% endfor %}
                     {% endif %}
+
                 </div>
             </div>
             <!-- tap1 끝 -->
 
-            <!-- 가입된 스터디 -->
+            <!-- tap2 -->
+            {% if room_members %}
             <div id="tab-2" class="tab-content">
                 <div class="container main_content" style="justify-content: flex-start !important;">
-
-                    {% if member %}
+                    
                     {% for r in room %}
-                    {% for m in member %}
+                    {% for m in room_members %}
+                    {% if request.usr == m.join_user %}
                     <div class="main_con ">
                         <div class="main_content-box">
                             <div class="oner_box">
@@ -238,12 +249,12 @@
                                         <img src="../static/images/profile.jpg" alt="">
                                     </div>
                                     <div class="oner_name">
-                                        <p>방장 : {{ m.room_owner }}</p>
+                                        <p>방장 : {{ r.room_owner }}</p>
                                     </div>
                                 </div>
 
                                 <!-- 공개방/비밀방 -->
-                                {% if r.room_password %}
+                                 12{% if r.room_password %}
                                 <div class="oner_box-secret">
                                     <div class="oner_profile">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -272,12 +283,13 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}   
                     {% endfor %}
                     {% endfor %}
-                    {% endif %}
                 </div>
             </div>
-            <!-- 스터디 끝 -->
+            {% endif %}
+            <!-- tap2 끝 -->
         </div>
 
     </section>

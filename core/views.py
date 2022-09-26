@@ -78,10 +78,12 @@ def mypage(request):
     res_data = {}
     user = request.user
     room_list = Room.objects.all().order_by('-id')
-    members = Room_member.objects.all()
-    res_data = {'room' : room_list, 'member': members }
+    room_members = Room_member.objects.all()
+    room_info = Room.objects.all()
+
+    print(room_members)
+    res_data = {'room' : room_list, 'room_members': room_members, 'room_info':room_info }
     
-    print(members)
 
     res_data['user'] = {
         'user_id' : user.username, # 회원아이디

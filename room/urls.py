@@ -9,5 +9,4 @@ urlpatterns = [
     path('room/edit/<int:pk>',views.room_edit, name="room_edit"), #글수정
     path('room/delete/<int:pk>',views.room_delete, name='room_delete'), #글삭제
     
-    # # path('room/join/<int:pk>',views.room_join, name="room_join"), #가입
 ]
