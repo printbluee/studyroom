@@ -9,7 +9,7 @@ from core.utils import util as custom_util
 
 #모델 가져오기
 from .models import User
-from room.models import Room, Room_member
+from room.models import Room
 
 # 메인페이지
 @csrf_exempt
@@ -73,28 +73,28 @@ def resigter(request):
         return render(request, 'resigter.html')
 
 #마이페이지
-@login_required
-def mypage(request):
-    res_data = {}
-    user = request.user
-    room_list = Room.objects.all().order_by('-id')
-    room_members = Room_member.objects.all()
-    room_info = Room.objects.all()
+# @login_required
+# def mypage(request):
+#     res_data = {}
+#     user = request.user
+#     room_list = Room.objects.all().order_by('-id')
+#     room_members = Room_member.objects.all()
+#     room_info = Room.objects.all()
 
-    print(room_members)
-    res_data = {'room' : room_list, 'room_members': room_members, 'room_info':room_info }
+#     print(room_members)
+#     res_data = {'room' : room_list, 'room_members': room_members, 'room_info':room_info }
     
 
-    res_data['user'] = {
-        'user_id' : user.username, # 회원아이디
-        'user_nickname' : user.nickname, # 닉네임
-        'user_name' : user.name, # 닉네임
-        'user_bio' : user.bio, # 자기소개
-    }
+#     res_data['user'] = {
+#         'user_id' : user.username, # 회원아이디
+#         'user_nickname' : user.nickname, # 닉네임
+#         'user_name' : user.name, # 닉네임
+#         'user_bio' : user.bio, # 자기소개
+#     }
 
-    if request.method == 'POST':
-        user_bio = request.POST['user_bio']
-        user.bio = user_bio
-        user.save()
+#     if request.method == 'POST':
+#         user_bio = request.POST['user_bio']
+#         user.bio = user_bio
+#         user.save()
         
-    return render(request, 'mypage.html', res_data)
+#     return render(request, 'mypage.html', res_data)

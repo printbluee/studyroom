@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.datastructures import MultiValueDictKeyError
 #모델 가져오기
-from room.models import Room, Room_comment, Room_member
+from room.models import Room
 
 # 글 쓰기
 @login_required
@@ -46,50 +46,50 @@ def room_add(request):
     else:
         return render(request, 'create_room.html')
 
-# 글 상세페이지
-@login_required
-def room_info(request, pk):
-    article = request.user  # 작성자
-    join_user = request.user  # 가입하는 유저
+# # 글 상세페이지
+# @login_required
+# def room_info(request, pk):
+#     article = request.user  # 작성자
+#     join_user = request.user  # 가입하는 유저
 
-    room_pk = Room.objects.get(pk=pk) # 방함수의 pk
-    room_comment = Room_comment.objects.filter(room=pk) # 댓글함수의 room.pk
-    room_members = Room_member.objects.filter(group=pk) # 멤버함수의 room.pk
+#     room_pk = Room.objects.get(pk=pk) # 방함수의 pk
+#     room_comment = Room_comment.objects.filter(room=pk) # 댓글함수의 room.pk
+#     room_members = Room_member.objects.filter(group=pk) # 멤버함수의 room.pk
 
-    user_check = Room_member.objects.filter(join_user=request.user)
+#     user_check = Room_member.objects.filter(join_user=request.user)
     
-    res_data = {}
-    res_data = {
-        'room': room_pk,
-        'room_comment': room_comment,
-        'room_members': room_members,
-        'user_check': user_check,
-    }
+#     res_data = {}
+#     res_data = {
+#         'room': room_pk,
+#         'room_comment': room_comment,
+#         'room_members': room_members,
+#         'user_check': user_check,
+#     }
 
-    if request.method == 'POST':
-        comment = request.POST.get('comment') # 댓글내용
+#     if request.method == 'POST':
+#         comment = request.POST.get('comment') # 댓글내용
 
-        try:
-            comment = request.POST.get('comment')
-        except MultiValueDictKeyError:
-            comment = False
+#         try:
+#             comment = request.POST.get('comment')
+#         except MultiValueDictKeyError:
+#             comment = False
 
-        if comment:
-            commentobj = Room_comment()
-            commentobj.room = room_pk
-            commentobj.article = article
-            commentobj.comment = comment
-            commentobj.created_at = timezone.now()
-            commentobj.save()
+#         if comment:
+#             commentobj = Room_comment()
+#             commentobj.room = room_pk
+#             commentobj.article = article
+#             commentobj.comment = comment
+#             commentobj.created_at = timezone.now()
+#             commentobj.save()
 
-        elif not room_members: #room 멤버가 아닐때 / 가입과 댓글이 동시에 post로 들어와 제어해줘야함
-            memberobj = Room_member()
-            memberobj.join_user = join_user
-            memberobj.group = room_pk
-            memberobj.date_joined = timezone.now()  # 현재시간
-            memberobj.save()
+#         elif not room_members: #room 멤버가 아닐때 / 가입과 댓글이 동시에 post로 들어와 제어해줘야함
+#             memberobj = Room_member()
+#             memberobj.join_user = join_user
+#             memberobj.group = room_pk
+#             memberobj.date_joined = timezone.now()  # 현재시간
+#             memberobj.save()
 
-    return render(request, 'room_info.html', res_data)
+#     return render(request, 'room_info.html', res_data)
 
 
 # 검색하기
