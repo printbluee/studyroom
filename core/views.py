@@ -9,12 +9,12 @@ from core.utils import util as custom_util
 
 #모델 가져오기
 from .models import User
-from room.models import Room
+from room.models import Room_group
 
 # 메인페이지
 @csrf_exempt
 def main(request):
-    room_list = Room.objects.all().order_by('-id')   
+    room_list = Room_group.objects.all().order_by('-id')   
 
     page = request.GET.get('page', '1')  # 페이지
     paginator = Paginator(room_list, 6)  # 페이지당 6개씩 보여주기

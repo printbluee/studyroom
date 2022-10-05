@@ -1,3 +1,4 @@
+from pickle import NONE
 import re
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -5,8 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.datastructures import MultiValueDictKeyError
+from django.core import validators
 #모델 가져오기
-from room.models import Room ,Room_member ,Room_comment
+from room.models import Room_info,Room_group,Room_member,Room_comment
 
 # 글 쓰기
 @login_required
@@ -32,7 +34,7 @@ def room_add(request):
                 return render(request, 'create_room.html', {"error": "방 비밀번호는 숫자 5글자로 설정해주세요"})
 
         if (title and sub_title and content):
-            PostingObj = Room()
+            PostingObj = Room_group()
             PostingObj.title = title
             PostingObj.sub_title = sub_title
             PostingObj.content = content
@@ -46,55 +48,66 @@ def room_add(request):
     else:
         return render(request, 'create_room.html')
 
-# # 글 상세페이지
+# 글 상세페이지
 @login_required
 def room_info(request, pk):
     article = request.user  # 작성자
     join_user = request.user  # 가입하는 유저
-
-    room_pk = Room.objects.get(pk=pk).room_member # 방함수의 pk
-   
-    check1 = Room_member.objects.values()
-    check2 = Room_comment.objects.values()
-    print(room_pk)
-    # print('1 : ', check1)
-    # print('2 : ', check2)
-
-    room_comment = Room_comment.objects.all() # 댓글함수의 room.pk
-    room_members = Room_member.objects.all() # 멤버함수의 room.pk
-
-    # user_check = Room_member.objects.filter(join_user=request.user)
     
+    room_info = Room_info.objects.all()
+    # print(room_info)
+    room_group = Room_group.objects.get(pk=pk) # 방함수의 pk
+    print('room_group :',room_group)
+
+    room_comment = Room_comment.objects.get(group=pk)
+
+    # room_comment = Room_comment.objects.get(group=pk) # 댓글함수의 room.pk
+    print('room_comment :',room_comment)
+
+    # room_members = Room_member.objects.get(group=pk) # 멤버함수의 room.pk
+    # print('room_members :',room_members)
+
     res_data = {}
     res_data = {
-        'room': room_pk,
+        'room_info': room_info,
+        'room': room_group,
         'room_comment': room_comment,
-        'room_members': room_members,
-        # 'user_check': user_check,
+        # 'room_members': room_members,
     }
 
-    # if request.method == 'POST':
-    #     comment = request.POST.get('comment') # 댓글내용
+    if request.method == 'POST':
+        comment = request.POST.get('comment') # 댓글내용
 
-    #     try:
-    #         comment = request.POST.get('comment')
-    #     except MultiValueDictKeyError:
-    #         comment = False
+        # info_obj = Room_info(
+        #     room = room_group,
+        #     room_member = memberobj,
+        #     room_comment = commentobj
+        # )
 
-    #     if comment:
-    #         commentobj = Room()
-    #         commentobj.room = room_pk
-    #         commentobj.article = article
-    #         commentobj.comment = comment
-    #         commentobj.created_at = timezone.now()
-    #         commentobj.save()
+        if 'join' in request.POST:
+            user_check = Room_member.objects.filter(join_user=request.user)
+            if not user_check:
+                print('1번')
+                memberobj = Room_member()
+                memberobj.join_user = join_user
+                memberobj.group = room_group
+                memberobj.created_at = timezone.now()  # 현재시간
+                memberobj.save()
 
-        # elif not room_members: #room 멤버가 아닐때 / 가입과 댓글이 동시에 post로 들어와 제어해줘야함
-        #     memberobj = Room_member()
-        #     memberobj.join_user = join_user
-        #     memberobj.group = room_pk
-        #     memberobj.date_joined = timezone.now()  # 현재시간
-        #     memberobj.save()
+            else:
+                print('2번')
+                res_data['error'] = "이미 가입한 유저입니다."
+            
+        if comment:
+            commentobj = Room_comment()
+            commentobj.group = room_group
+            commentobj.article = article
+            commentobj.comment = comment
+            commentobj.created_at = timezone.now()
+            commentobj.save()
+
+        
+        # info_obj.save()
 
     return render(request, 'room_info.html', res_data)
 
@@ -107,7 +120,7 @@ def search(request):
 
     if search_keyword:  # 키워드 검색이 들어왔을때만 작동
         if len(search_keyword) > 1:
-            room_list = Room.objects.all().order_by('-id')
+            room_list = Room_group.objects.all().order_by('-id')
 
             search_posting_list = room_list.filter(
                 Q(title__icontains=search_keyword) |  # 방제
@@ -118,6 +131,7 @@ def search(request):
             res_data['room'] = search_posting_list
         else:
             res_data['error'] = "검색어는 2글자 이상 입력해주세요."
+            print(res_data)
     else:
         res_data['error'] = "검색 결과가 없습니다."
 
@@ -128,7 +142,7 @@ def search(request):
 def room_edit(request, pk):
     res_data = {}
     try:
-        room = Room.objects.get(pk=pk)
+        room = Room_group.objects.get(pk=pk)
     except:
         return render(request, 'room_edit.html', {'error': "잘못된 접근입니다."})
 
@@ -171,7 +185,7 @@ def room_edit(request, pk):
 # 글 삭제
 @login_required
 def room_delete(request, pk):
-    room = Room.objects.get(pk=pk)
+    room = Room_group.objects.get(pk=pk)
 
     if request.method == 'GET':
         room.delete()  # 삭제

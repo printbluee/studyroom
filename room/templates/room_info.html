@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %}스ㅌㅓ디룸</title>
+    <title>{{ room.title }} | 스ㅌㅓ디룸</title>
     <link rel="stylesheet" href="/static/css/room_page.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/5c2f488d06.js" crossorigin="anonymous"></script>
@@ -120,22 +120,23 @@
                             </div>
                         </div>
                     </div>
+                    {% elif request.user != room_info.room_member %}
                     <!-- 가입하기-->
-                    {% elif request.user != room.room_owner %}
                     <form method="post">
                         {% csrf_token %}
                         <div>
-                            <input type="submit" value="가입하기"
-                                class="joinBtn text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"></a>
+                            <button type="submit" name="join" id="join"
+                                class="joinBtn text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2">가입하기</a>
                         </div>
                     </form>
-                    {% elif request.user == room.room_member %}
+                    {% elif request.user == room_info.room_member %}
                     <div>
-                        <input type="submit" value="가입됨"
-                            class="joinBtn text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"></a>
+                        <button
+                            class="joinBtn text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2">가입됨</a>
                     </div>
                     {% endif %}
                 </div>
+                
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div class="w-full">
@@ -161,7 +162,7 @@
                                     제목 : {{ room.title }}</a>
                                 <p class="text-gray-700 text-xs mt-2">{{ room.sub_title }}</p>
                                 <p class="text-gray-700 text-s mt-2">{{ room.content }}</p>
-                                <p class="text-gray-700 text-xs mt-2">작성일 : {{ room.create | date:"Y-m-d" }}</p>
+                                <p class="text-gray-700 text-xs mt-2">작성일 : {{ room.create }}</p>
                             </div>
                         </div>
                     </div>
@@ -184,7 +185,7 @@
                         {% endif %}
 
                         <!-- 멤버 있을 때 -->
-                        {% if room_members %}
+                        {% if room_members.group == room.title %}
                        
                         {% for m in room_members %}
                         <p class="text-gray-800 text-s plus-icon">멤버 : {{ m.join_user }}</p>
